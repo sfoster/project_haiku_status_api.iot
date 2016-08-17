@@ -23,35 +23,101 @@ h1 {
   padding: 6px 12px;
   width: 269px;
 }
-.myled {
-  width: 20px;
-  height: 20px;
+
+.slot {
+  width: 30px;
+  height: 26px;
   display: inline-block;
-  border: 1px solid #333;
-  border-radius: 3px;
   margin: 0 1px;
+  position: relative;
+  vertical-align: middle;
+  border-radius: 3px;
 }
 
-.led {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  border: 1px solid #333;
-  border-radius: 3px;
-  /*background-color: #000;*/
-  margin: 0 1px;
-}
-.led.isSelf {
+.slot.isSelf {
   margin: 0 9px;
   border: 3px solid #fff;
 }
 
-#led0 {background-color: #ff00ff;}
-#led1 {background-color: #ffff00;}
-#led2 {background-color: #00ffff;}
-#led3 {background-color: #00ff07;}
-#led4 {background-color: #772cb6;}
-#led5 {background-color: #ff00ff;}
+.led {
+  width: 28px;
+  height: 24px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.myled {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  border: 1px solid #333;
+  border-radius: 3px;
+  margin: 0 1px;
+}
+
+#led0 {
+  background-color: #ff00ff;
+}
+#led1 {
+  background-color: #ffff00;
+}
+#led2 {
+  background-color: #00ffff;
+}
+#led3 {
+  background-color: #00ff07;
+}
+#led4 {
+  background-color: #772cb6;
+}
+#led5 {
+  background-color: #ff00ff;
+}
+
+.led-overlay {
+  margin: 0 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 22px;
+  background-image: url(../images/animal-icons.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: invert(100%);
+}
+
+#myled-overlay {
+  background-image: none;
+}
+#led0-overlay {
+  /* the lion */
+  background-position: -3px 2px;
+}
+#led1-overlay {
+  /* the shark */
+  background-position: -3px -199px;
+}
+#led2-overlay {
+  /* penguin */
+  background-position: -2px -449px;
+}
+#led3-overlay {
+  /* frog */
+  background-position: -2px -424px;
+}
+#led4-overlay {
+  /* elephant */
+  background-position: -3px -273px;
+}
+#led5-overlay {
+  /* chicken/rooster */
+  background-position: -3px -374px;
+}
+
 
 #visualization {
   height: 600px;
@@ -64,8 +130,8 @@ h1 {
 #band {
   position: absolute;
   top: 270px;
-  left: 42px;
-  width: 240px;
+  left: 0px;
+  width: 280px;
   height: 46px;
   transform: rotate(-12deg);
 }

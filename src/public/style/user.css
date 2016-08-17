@@ -18,7 +18,7 @@
   background-position: -2px -76px;
 }
 #user4 .userIcon {
-  background-position: -2px -120px;
+  background-position: -2px -114px;
 }
 
 .userContainer:not(.isSelf) > .userIcon::before {
