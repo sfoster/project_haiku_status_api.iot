@@ -1,7 +1,9 @@
 (function(global){
   // export a config global
   var config = global.config = {
-    apiOrigin: 'http://localhost:3000'
+    // change/override this if the api service is not on the same origin
+    // as the static client content
+    apiOrigin: location.origin
   };
 
   // pull config from querystring
