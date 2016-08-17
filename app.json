@@ -1,0 +1,8 @@
+{
+  "name": "Project Haiku: Status API",
+  "description": "The status API service used by Project Haiku and its experiments",
+  "repository": "https://github.com/mozilla/project_haiku_status_api.iot/",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express"],
+  "image": "heroku/nodejs"
+}
