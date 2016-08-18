@@ -222,6 +222,7 @@ function renderApp() {
     } else if (slot.status && slot.status.didChange) {
       console.log('renderApp: change slot status: ', idx, slot);
       SlotsAnimationManager.changeSlotStatus(idx, slot.status.value === '1' ? 1 : 0);
+      Buzz(150);
       // reset dirty flag
       slot.status.didChange = false;
     }
