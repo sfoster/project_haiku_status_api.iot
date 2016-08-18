@@ -10,13 +10,34 @@
   <section class="container" id="visualization">
     <div id="band">
       <audio id="buzz" src="sounds/DrainMagic.ogg"></audio>
-      <div id="myled" class="led isSelf" onclick="toggleMyStatus();"></div>
-      <div id="led0" class="led" onclick="sendMessage(0);"></div>
-      <div id="led1" class="led" onclick="sendMessage(1);"></div>
-      <div id="led2" class="led" onclick="sendMessage(2);"></div>
-      <div id="led3" class="led" onclick="sendMessage(3);"></div>
-      <div id="led4" class="led" onclick="sendMessage(4);"></div>
-      <div id="led5" class="led" onclick="sendMessage(5);"></div>
+      <div id="slot-me" class="slot isSelf">
+        <div id="myled" class="led isSelf" onclick="toggleMyStatus();"></div>
+        <div id="myled-overlay" class="led-overlay" onclick="toggleMyStatus();"></div>
+      </div>
+      <div id="slot0" class="slot">
+        <div id="led0" class="led" onclick="sendMessage(0);"></div>
+        <div id="led0-overlay" class="led-overlay" onclick="sendMessage(0);"></div>
+      </div>
+      <div id="slot1" class="slot">
+        <div id="led1" class="led" onclick="sendMessage(1);"></div>
+        <div id="led1-overlay" class="led-overlay" onclick="sendMessage(1);"></div>
+      </div>
+      <div id="slot2" class="slot">
+        <div id="led2" class="led" onclick="sendMessage(2);"></div>
+        <div id="led2-overlay" class="led-overlay" onclick="sendMessage(2);"></div>
+      </div>
+      <div id="slot3" class="slot">
+        <div id="led3" class="led" onclick="sendMessage(3);"></div>
+        <div id="led3-overlay" class="led-overlay" onclick="sendMessage(3);"></div>
+      </div>
+      <div id="slot4" class="slot">
+        <div id="led4" class="led" onclick="sendMessage(4);"></div>
+        <div id="led4-overlay" class="led-overlay" onclick="sendMessage(4);"></div>
+      </div>
+      <div id="slot5" class="slot">
+        <div id="led5" class="led" onclick="sendMessage(5);"></div>
+        <div id="led5-overlay" class="led-overlay" onclick="sendMessage(5);"></div>
+      </div>
     </div>
   </section>
 

@@ -122,7 +122,7 @@ function initRendering() {
   if (titleNode) {
     titleNode.innerHTML = 'status client: ' + config.id;
   }
-  gPixelNodes = document.querySelectorAll('#band > .led');
+  gPixelNodes = document.querySelectorAll('#band > .slot > .led');
 
   // SlotsAnimationManager prepares a view-model for each slot (including self) we need to render
   gPixels = SlotsAnimationManager.initSlots(new Array(gPixelNodes.length));
