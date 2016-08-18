@@ -35,3 +35,14 @@
   font-style: italic;
   padding: 10px 0 0 60px;
  }
+
+@media (max-width: 600px) {
+  body > section:first-child{
+    display: inline-block;
+    margin:5px;
+  }
+  .userContainer iframe {
+    width: 300px;
+    height: 400px;
+  }
+}
