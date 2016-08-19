@@ -1,126 +1,42 @@
 'use strict';
 var bodyParser = require('body-parser');
-var express = require('express');
-var fs = require('fs');
-var path = require('path');
 var cors = require('cors');
+var express = require('express');
+var mongoose = require('mongoose');
+var path = require('path');
+var api = {
+  status: require('./api/status'),
+  slots: require('./api/slots'),
+  message: require('./api/message'),
+  details: require('./api/details'),
+  user: require('./models/user')
+};
 
 var app = express();
-var dataDir = path.join(__dirname, '../data');
-var publicDir = path.join(__dirname, 'public');
 var config = {
   port: process.env.PORT || 3000
 };
-
-// FIXME: disabling this temporarily as it is causing all non-GET requests
-// to return a 405 Method not allowed error
-// app.use(serveIndex(publicDir, {'icons': true}));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(express.static(publicDir));
+app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('/user/:id/status', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'status');
-
-  fs.readFile(filename, function (err, buf) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error reading status!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(buf.toString());
-  });
+mongoose.connect('mongodb://localhost/haiku');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("Connected to UsersDB with Mongoose");
 });
 
-app.get('/user/:id/message', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'message');
-
-  fs.readFile(filename, function (err, buf) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error reading message!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(buf.toString());
-  });
-});
-
-app.get('/user/:id/slots', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'slots');
-
-  fs.readFile(filename, function (err, buf) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error reading message!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(buf.toString());
-  });
-});
-
-app.get('/user/:id/details', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'details');
-
-  fs.readFile(filename, function (err, buf) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error reading details!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(buf.toString());
-  });
-});
-
-app.put('/user/:id/status', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'status');
-  var data = JSON.stringify({
-    'last-modified': new Date(),
-    value: req.body.value
-  });
-
-  fs.writeFile(filename, data, function (err) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error updating status!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data);
-  });
-});
-
-app.put('/user/:id/message', function (req, res) {
-  var num = req.params.id || 0;
-  var filename = path.join(dataDir, 'user', num, 'message');
-  var data = JSON.stringify({
-    'last-modified': new Date(),
-    value: req.body.value,
-    sender: req.body.sender
-  });
-
-  fs.writeFile(filename, data, function (err) {
-    if (err) {
-      console.error(err.stack);
-      return res.status(500).send('Error updating message!');
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data);
-  });
-});
+app.get('/user/:id/status', api.status.getStatus);
+app.put('/user/:id/status', api.status.updateStatus);
+app.get('/user/:id/message', api.message.getMessage);
+app.put('/user/:id/message', api.message.updateMessage);
+app.get('/user/:id/slots', api.slots.getSlots);
+app.get('/user/:id/details', api.details.getDetails);
 
 app.listen(config.port, function () {
   console.log('Status app listening on port ' + config.port + '!');
