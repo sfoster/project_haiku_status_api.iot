@@ -12,17 +12,17 @@ Chart.prototype.addSeries = function(series, options) {
     series.renderOptions = options;
   }
   this.series.push(series);
-  this.series.forEach(series => {
-    var maxY = series.reduce((prev, curr, idx) => {
+  this.series.forEach(function(series) {
+    var maxY = series.reduce(function(prev, curr, idx) {
       return curr.y > prev ? curr.y : prev;
     }, 0);
-    var maxX = this.maxX = series.reduce((prev, curr, idx) => {
+    var maxX = this.maxX = series.reduce(function(prev, curr, idx) {
       return curr.x > prev ? curr.x : prev;
     }, 0);
-    var minY = series.reduce((prev, curr, idx) => {
+    var minY = series.reduce(function(prev, curr, idx) {
       return curr.y < prev ? curr.y : prev;
     }, maxY);
-    var minX = series.reduce((prev, curr, idx) => {
+    var minX = series.reduce(function(prev, curr, idx) {
       return curr.x < prev ? curr.x : prev;
     }, maxX);
 
@@ -41,7 +41,7 @@ Chart.prototype.addSeries = function(series, options) {
     var xIncrements = 10;
     var rangeX = this.rangeX = getRange(this.minX, this.maxX);
     var rangeY = this.rangeY = getRange(this.minY, this.maxY);
-  });
+  }.bind(this));
 };
 
 Chart.prototype.drawAxes = function() {
@@ -87,12 +87,12 @@ Chart.prototype.getYPixel = function(val) {
   return this.node.height - y;
 };
 Chart.prototype.plotSeries = function() {
-  this.series.forEach(series => {
+  this.series.forEach(function(series) {
     if (!series.renderOptions) {
       series.renderOptions = {};
     }
     this._plotSeries(series);
-  });
+  }.bind(this));
 };
 
 Chart.prototype._plotSeries = function(series) {
@@ -111,20 +111,20 @@ Chart.prototype._plotSeries = function(series) {
   // draw points
   ctx.beginPath();
   ctx.fillStyle = series.renderOptions.dotColor || '#f00';
-  series.forEach((point, idx) => {
+  series.forEach(function(point, idx) {
     var x = this.getXPixel(point.x);
     var y = this.getYPixel(point.y);
     if (idx > 0){
       ctx.lineTo(x, y);
     }
     ctx.moveTo(x, y);
-  });
+  }.bind(this));
   ctx.stroke();
-  series.forEach((point, idx) => {
+  series.forEach(function(point, idx) {
     var x = this.getXPixel(point.x);
     var y = this.getYPixel(point.y);
     ctx.fillRect(x, y, 1, 1);
-  });
+  }.bind(this));
 };
 Chart.prototype.render = function() {
   this.drawAxes();

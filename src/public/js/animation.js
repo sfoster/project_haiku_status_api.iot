@@ -65,7 +65,9 @@ function allOff(delta, animateState, pixels) {
     }
   }
   var offColor = Object.create(RGBColor);
-  offColor.b = 41;
+  offColor.r = 102;
+  offColor.g = 102;
+  offColor.b = 102;
   for(var i=0; i<pixels.length; i++) {
     pixels[i].color = offColor;
   }
@@ -113,7 +115,7 @@ function pixelGroupKeyFrameAnimation(delta, animateState, pixels) {
       0 : clamp(animateState.centerPixelIndex, 0, pixels.length-1);
   // each pixel is offset by some number of ms
   var pixelTimeOffset = animateState.pixelTimeOffset; // ms;
-  pixels.forEach((pixel, idx) => {
+  pixels.forEach(function(pixel, idx) {
     var distance = 1+Math.abs(idx - centerPixelIndex);
     var sign = idx >= centerPixelIndex ? 1 : -1;
     var timeOffset = distance * sign * pixelTimeOffset;
@@ -139,7 +141,7 @@ function eachPixel(delta, groupAnimateState, pixels) {
   // this is just a facade to update animations on the individual pixels
   // and is expected to run continually until its explicitly stopped
 
-  pixels.forEach((pixel, i) => {
+  pixels.forEach(function(pixel, i) {
     if (!pixel) {
       // slots can be empty/unassigned
       return;
@@ -185,11 +187,11 @@ function createAnimation(animName, config) {
       animateState.updateFn = keyFrameAnimation;
       animateState.name = animName;
       animateState.keyFrames = {
-        '0%': Color.create(0,103,32),
-        '50%': Color.create(0,153,32),
-        '100%': Color.create(0,103,32)
+        '0%': HSVColor.create(76,73,139),
+        '50%': HSVColor.create(76,73,197),
+        '100%': HSVColor.create(76,73,139)
       };
-      animateState.duration = 2500;
+      animateState.duration = 4000;
       animateState.iterationCount = Infinity;
       // TODO: also handle transition states, error states etc?
       break;
@@ -197,11 +199,11 @@ function createAnimation(animName, config) {
       animateState.updateFn = keyFrameAnimation;
       animateState.name = animName;
       animateState.keyFrames = {
-        '00%': Color.create(0,0,0),
-        '65%': Color.create(0,0,80),
-        '100%': Color.create(0,0,0)
+        '00%': HSVColor.create(0,0,39),
+        '65%': HSVColor.create(0,0,80),
+        '100%': HSVColor.create(0,0,39)
       };
-      animateState.duration = 2000;
+      animateState.duration = 4000;
       animateState.iterationCount = 1;
       break;
     case 'connecting':
@@ -326,7 +328,7 @@ function plotAnimation(animateState) {
   var rSeries = [],
       gSeries = [],
       bSeries = [];
-  animateState.steps.forEach(step => {
+  animateState.steps.forEach(function(step) {
     if (typeof step.color.h !== 'undefined') {
       step.color = Color.HSVtoRGB(step.color);
     }

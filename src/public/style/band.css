@@ -1,0 +1,156 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fff;
+}
+
+section {
+   position: relative;
+   top: 0;
+   left: 0;
+   width: 100%;
+}
+
+.container {
+  padding: 6px 12px;
+  width: auto;
+}
+
+#visualization {
+  position: absolute;
+  top: 1rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#band {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 75px);
+  width: 150px;
+  height: 980px;
+  background: transparent url('../images/bracelet.png') no-repeat 0 0;
+  -webkit-transform: none;
+  transform: none;
+  transform-origin: top center;
+}
+
+.slot {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 125px;
+  height: 91px;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  /* border: 1px solid #999; */
+}
+
+.slot.isSelf {
+  top: 69px;
+  height: 143px;
+  width: 100px;
+  background: none;
+}
+
+#slot0 {
+  top: 264px;
+}
+#slot1 {
+  top: 390px;
+}
+#slot2 {
+  top: 516px;
+}
+#slot3 {
+  top: 642px;
+}
+#slot4 {
+  top: 768px;
+}
+
+.led {
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#myled {
+  left: 20px;
+  right: 12px;
+  border: none;
+  margin: 0;
+}
+
+.led-overlay {
+  margin: 0 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 20px;
+  bottom: 0;
+  background-image: url(../images/icons_ON.png);
+  background-repeat: no-repeat;
+}
+
+#myled-overlay {
+  background: transparent url('../images/toggle_tray.png') no-repeat;
+  z-index: 1;
+  background-position: -20px 0;
+  right: 0;
+}
+
+#myled-toggle-nubbin {
+  background: url(../images/toggle_Slider.png) no-repeat;
+  background-position: bottom center;
+  transition: background-position 0.5s ease;
+  z-index: 2;
+  left: 25px;
+}
+
+.slot.available > #myled-toggle-nubbin {
+  background-position: top center;
+}
+
+#led0-overlay {
+  /* the rhino */
+  background-position: -28px -264px;
+}
+#led1-overlay {
+  /* the kangaroo */
+  background-position: -28px -390px;
+}
+#led2-overlay {
+  /* racoon */
+  background-position: -28px -516px;
+}
+#led3-overlay {
+  /* leopard */
+  background-position: -28px -642px;
+}
+#led4-overlay {
+  /* wolf */
+  background-position: -28px -768px;
+}
+
+@media screen and (orientation: landscape) {
+  #visualization {
+    top: 50%;
+  }
+  #band {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    top: 0;
+    left: calc(50% - 550px);
+  }
+}

@@ -11,6 +11,10 @@ var appState = {
 };
 var gPixelNodes;
 var gPixels;
+
+ACTIVE_POLL_INTERVAL = 2000;
+INACTIVE_POLL_INTERVAL = 15000;
+var gPollInterval = ACTIVE_POLL_INTERVAL;
 /*
 an example of the slots array
 [
@@ -33,7 +37,7 @@ function jsonRequest(url, requestConfig) {
   // thin wrapper around fetch, to ensure errors go down the resolved path
   url = config.apiOrigin + '/' + url;
 
-  var promise = new Promise((resolve, reject) => {
+  var promise = new Promise(function(resolve, reject) {
     var fetched = window.fetch(url, requestConfig);
     fetched.catch(function(err) {
         // network or permissions error?
@@ -52,13 +56,27 @@ function jsonRequest(url, requestConfig) {
 function init() {
   initRendering();
   initStatuses().then(startPolling);
+
+  // pause if the window/tab loses visibility
+  document.addEventListener("visibilitychange", function() {
+    stopPolling();
+    if (document.hidden) {
+      SlotsAnimationManager.stop();
+      gPollInterval = INACTIVE_POLL_INTERVAL;
+      startPolling();
+    } else {
+      SlotsAnimationManager.start(SlotsAnimationManager.stateId);
+      gPollInterval = ACTIVE_POLL_INTERVAL;
+      startPolling();
+    }
+  });
 }
 
 function startPolling() {
   if (pollIntervalID) {
     return;
   }
-  pollIntervalID = setInterval(fetchAndRenderSlots, 2000);
+  pollIntervalID = setInterval(fetchAndRenderSlots, gPollInterval);
 }
 
 function stopPolling() {
@@ -130,6 +148,9 @@ function initRendering() {
   SlotsAnimationManager.render = paintPixels;
   // start calling render ~60fps
   SlotsAnimationManager.start();
+
+  // toggle a class on the element
+  gPixelNodes[0].classList.toggle('available', appState.mySlot.status.value === '1');
 }
 
 function fetchAndRenderSlots() {
@@ -145,7 +166,7 @@ function fetchAndRenderSlots() {
 
   var fetched = Promise.all(fetchPromises);
   fetched.then(function(dataSet) {
-    dataSet.forEach((data, idx, collection) => {
+    dataSet.forEach(function(data, idx, collection) {
       if (idx < collection.length - 1) {
         updateSlot(data, idx, appState.slots)
       } else {
@@ -166,7 +187,7 @@ function updateMessage(messageData) {
   }
   var lastMessage = appState.mySlot.message;
   var didChange;
-  var recentThreshold = 1000 * 60; // 1 minute, we ignore stale messages
+  var recentThreshold = 1000 * 30; // > 30s is a stale message
   var timeSent = (new Date(messageData['last-modified'])).getTime();
   if (!lastMessage ||
       (lastMessage.sender !== messageData.sender) ||
@@ -220,6 +241,7 @@ function updateSlot(newStatus, idx, collection) {
 function renderApp() {
   // update the view model for the next tick
   var allSlots = [appState.mySlot].concat(appState.slots);
+  allSlots.length = gPixelNodes.length;
   allSlots.forEach(function(slot, idx) {
     var didChange;
     if (!slot) {
@@ -236,6 +258,8 @@ function renderApp() {
       delete slot.messageSent;
     }
   });
+  // toggle a class on the containing element
+  gPixelNodes[0].parentNode.classList.toggle('available', appState.mySlot.status.value === '1');
 }
 
 function toggleMyStatus() {

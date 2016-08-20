@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Haiku: My Band</title>
+  <link rel="stylesheet" href="./style/band.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=2.0">
+
+  <link rel=apple-touch-startup-image href="./images/icons/project-haiku-m-512.png">
+  <meta name=apple-mobile-web-app-capable content=yes>
+  <link rel=apple-touch-icon href="./images/icons/project-haiku-m-512.png">
+  <link rel=icon type=image/png href="./images/icons/project-haiku-m-512.png">
+
+</head>
+<body>
+  <section class="container" id="visualization">
+    <div id="band">
+      <audio id="buzz">
+        <source src="sounds/pagervibrate.ogg" type="audio/ogg; codecs=vorbis"></source>
+        <source src="sounds/pagervibrate.mp3" type="audio/mpeg"></source>
+      </audio>
+      <div id="slot-me" class="slot isSelf" onclick="toggleMyStatus();">
+        <div id="myled" class="led isSelf"></div>
+        <div id="myled-overlay" class="led-overlay"></div>
+        <div id="myled-toggle-nubbin" class="led-overlay"></div>
+      </div>
+      <div id="slot0" class="slot">
+        <div id="led0" class="led" onclick="sendMessage(0);"></div>
+        <div id="led0-overlay" class="led-overlay" onclick="sendMessage(0);"></div>
+      </div>
+      <div id="slot1" class="slot">
+        <div id="led1" class="led" onclick="sendMessage(1);"></div>
+        <div id="led1-overlay" class="led-overlay" onclick="sendMessage(1);"></div>
+      </div>
+      <div id="slot2" class="slot">
+        <div id="led2" class="led" onclick="sendMessage(2);"></div>
+        <div id="led2-overlay" class="led-overlay" onclick="sendMessage(2);"></div>
+      </div>
+      <div id="slot3" class="slot">
+        <div id="led3" class="led" onclick="sendMessage(3);"></div>
+        <div id="led3-overlay" class="led-overlay" onclick="sendMessage(3);"></div>
+      </div>
+      <div id="slot4" class="slot">
+        <div id="led4" class="led" onclick="sendMessage(4);"></div>
+        <div id="led4-overlay" class="led-overlay" onclick="sendMessage(4);"></div>
+      </div>
+    </div>
+  </section>
+
+<script src="./js/fetch-polyfill.js"></script>
+<script src="./js/config.js"></script>
+<script src="./js/util.js"></script>
+<script src="./js/color.js"></script>
+<script src="./js/easing.js"></script>
+<script src="./js/animation.js"></script>
+<script src="./js/slots-animation-manager.js"></script>
+<script src="./js/client.js"></script>
+
+<script type="text/javascript">
+ "use strict";
+  init();
+</script>
+</body></html>

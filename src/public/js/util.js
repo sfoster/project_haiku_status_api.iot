@@ -12,7 +12,7 @@ function wrap(num, ubound) {
 
 function vectorLerp(start, end, u, result) {
   result = result || {};
-  Object.keys(start).forEach(key => {
+  Object.keys(start).forEach(function(key) {
     result[key] = lerp(start[key], end[key], u);
   });
   return result;

@@ -35,8 +35,10 @@ SlotsAnimationManager.initSlots = function(slots) {
   return this.slots;
 };
 SlotsAnimationManager.start = function(stateId) {
-  this.changeState(stateId || SlotsAnimationManager.state.INITIALIZING);
-  this.animateRAFId = window.requestAnimationFrame(this.onAnimationFrame);
+  if (!this.animateRAFId) {
+    this.changeState(stateId || SlotsAnimationManager.state.INITIALIZING);
+    this.animateRAFId = window.requestAnimationFrame(this.onAnimationFrame);
+  }
 };
 
 SlotsAnimationManager.stop = function() {
@@ -62,9 +64,10 @@ SlotsAnimationManager.changeState = function(stateId) {
   }
   console.log('changeState: changing to ', stateId);
   this.nextStateId = stateId;
+  var animation;
   switch (stateId) {
     case SlotsAnimationManager.state.INITIALIZING: {
-      let animation = Animation.createAnimation('initializing', {
+      animation = Animation.createAnimation('initializing', {
         iterationCount: Infinity
       });
       this.animationStack.splice(0, this.animationStack.length, animation);
@@ -72,7 +75,7 @@ SlotsAnimationManager.changeState = function(stateId) {
     }
     case SlotsAnimationManager.state.ACTIVE: {
       this.slots[0].status = 1;
-      let animation = Animation.createAnimation('ledStatus', {
+      animation = Animation.createAnimation('ledStatus', {
         iterationCount: Infinity
       });
       this.animationStack.splice(0, this.animationStack.length, animation);
@@ -80,7 +83,7 @@ SlotsAnimationManager.changeState = function(stateId) {
     }
     case SlotsAnimationManager.state.INACTIVE: {
       this.slots[0].status = 0;
-      let animation = Animation.createAnimation('allOff', {
+      animation = Animation.createAnimation('allOff', {
         iterationCount: Infinity
       });
       this.animationStack.splice(0, this.animationStack.length, animation);
@@ -126,7 +129,6 @@ SlotsAnimationManager.changeSlotStatus = function(slotIndex, statusValue) {
   }
   // replace the whole animation stack with this new animation
   slot.animationStack.splice(0, slot.animationStack.length, animation);
-  console.log('changeSlotStatus, animationStack for slot is: ', slot.animationStack.map(a => a.name));
 };
 
 SlotsAnimationManager.playMessage = function(msgValue, originSlotIndex) {
