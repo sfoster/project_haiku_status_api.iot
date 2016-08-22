@@ -100,6 +100,8 @@ app.put('/user/:id/status', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   });
+  console.log(['user-action=STATUS-UPDATE', '%s', '%s', '%s', '%s'].join('\t'),
+              req.params.id, req.params.id, req.body.value, req.headers['user-agent']);
 });
 
 app.put('/user/:id/message', function (req, res) {
@@ -120,6 +122,8 @@ app.put('/user/:id/message', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(data);
   });
+  console.log(['user-action=MESSAGE-UPDATE', '%s', '%s', '%s', '%s'].join('\t'),
+              req.params.id, req.body.sender, req.body.value, req.headers['user-agent']);
 });
 
 app.listen(config.port, function () {
