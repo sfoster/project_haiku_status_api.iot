@@ -22,13 +22,13 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 mongoose.connect('mongodb://localhost/haiku');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log("Connected to UsersDB with Mongoose");
+  console.log("Connected to Haiku database with Mongoose");
 });
 
 app.get('/user/:id/status', api.status.getStatus);

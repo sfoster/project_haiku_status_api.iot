@@ -21,8 +21,8 @@
     "lint"
   ],
   "scripts": {
-    "start": "nodemon src/index.js",
-    "lint": "semistandard src",
+    "start": "nodemon src/server/index.js",
+    "lint": "semistandard src/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
