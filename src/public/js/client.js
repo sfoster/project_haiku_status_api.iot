@@ -174,7 +174,12 @@ function updateMessage(messageData) {
   {
     if (Date.now() - timeSent <= recentThreshold) {
       appState.mySlot.message = messageData;
-      SlotsAnimationManager.playMessage(messageData.value);
+      var senderSlotIndex = appState.slots.map(function(slot) {
+        return slot.id;
+      }).indexOf(messageData.sender);
+      // SlotsAnimationManager slots include 'self', so offset by 1
+      SlotsAnimationManager.playMessage(messageData.value, senderSlotIndex+1);
+      Buzz(650);
     }
   }
 }
@@ -222,7 +227,6 @@ function renderApp() {
     } else if (slot.status && slot.status.didChange) {
       console.log('renderApp: change slot status: ', idx, slot);
       SlotsAnimationManager.changeSlotStatus(idx, slot.status.value === '1' ? 1 : 0);
-      Buzz(150);
       // reset dirty flag
       slot.status.didChange = false;
     }
