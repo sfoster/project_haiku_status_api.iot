@@ -129,11 +129,18 @@ SlotsAnimationManager.changeSlotStatus = function(slotIndex, statusValue) {
   console.log('changeSlotStatus, animationStack for slot is: ', slot.animationStack.map(a => a.name));
 };
 
-SlotsAnimationManager.playMessage = function(msgValue) {
+SlotsAnimationManager.playMessage = function(msgValue, originSlotIndex) {
   switch (msgValue) {
     // TODO: implement other message/animation types?
     default:
       console.log('adding rainbowAll to animationStack');
+      // signal who sent the rainbow after the rainbowAll finishes
+      if (!isNaN(originSlotIndex) && originSlotIndex < this.slots.length) {
+        this.slots[originSlotIndex].animationStack.push(Animation.createAnimation('rainbow', {
+          iterationCount: 2,
+          duration: 600
+        }));
+      }
       this.animationStack.push(Animation.createAnimation('rainbowAll', {
         iterationCount: 2,
         duration: 600
