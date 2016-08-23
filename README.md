@@ -13,6 +13,31 @@ $ npm install
 ```
 
 
+## Starting Database
+
+Install MongoDB on your computer:
+
+https://docs.mongodb.com/manual/administration/install-on-linux/ (Linux Systems)
+
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/ (OS X)
+
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/ (Windows)
+
+
+Then, start up the database using:
+
+```
+$ mongod
+```
+
+
+With `haiku-data.json` in your current working directory run this command to import the data:
+
+```
+$ mongoimport --db haiku --collection users --drop --file haiku-data.json
+```
+
+
 ## Running Server
 
 ```
