@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Haiku / Availability Study</title>
+  <link rel="stylesheet" href="./style/client.css">
+  <style>
+    body {
+      font-family: 'Fira Sans', sans-serif;
+    }
+    h1 {
+      color: #eee;
+      text-align: center;
+      padding: 0.4rem 0;
+    }
+    #login {
+      margin: 20% auto;
+      padding: 2rem;
+      width: calc(100% - 10rem);
+      background-color: #eee;
+      border-radius: 8px;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 2rem
+    }
+    @media screen and (max-width: 420px) {
+      #login {
+        width: calc(100% - 1rem);
+        padding: 0.5rem;
+        font-size: 2rem
+      }
+    }
+    #login input[type="text"] {
+      font-size: 2rem;
+      width: 10rem;
+    }
+    #login input[type="submit"],
+    #login button {
+      font-size: 2rem;
+    }
+    #message {
+      background-color: #fcc;
+    }
+  </style>
+  <meta name="viewport" content="initial-scale=1.0" />
+</head>
+<body>
+  <h1>Project Haiku / Availability Study</h1>
+
+  <section class="container" id="login">
+      <labeL>Continue as user: <input type="text" name="id" id="userid" value="" autocapitalize="off"></label>
+      <button id="submit-btn">Go</button>
+      <div id="message"></div>
+  </section>
+
+<script src="./js/fetch-polyfill.js"></script>
+<script src="./js/config.js"></script>
+<script type="text/javascript">
+ "use strict";
+  if (config.id) {
+    document.getElementById('userid').value = config.id.toLowerCase();
+  }
+  function onSubmit() {
+    var id = document.getElementById('userid').value;
+    id = id.toLowerCase();
+    var msgNode = document.getElementById('message');
+    msgNode.textContent = '';
+    if (id) {
+      window.fetch('/user/' + id + '/status').then(function(resp) {
+        console.log('respond: ', resp);
+        if (resp.status === 200) {
+          window.location.href = location.origin + '/band.html?id=' + id;
+        } else {
+          document.getElementById('message').innerHTML = 'Error: ' + resp.statusText + '<br>' +
+            'wrong or unknown username?';
+        }
+      }, function(err) {
+        console.log('error: ', err);
+        document.getElementById('message').textContent = 'Error: ' + err.message;
+      });
+    }
+  }
+  document.getElementById('submit-btn').addEventListener('click', onSubmit);
+  document.getElementById('userid').addEventListener('keyup', function(evt) {
+    if (evt.keyCode === 13) {
+      onSubmit();
+    }
+  });
+
+</script>
+</body></html>
