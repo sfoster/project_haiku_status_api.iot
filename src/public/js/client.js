@@ -11,6 +11,7 @@ var appState = {
 };
 var gPixelNodes;
 var gPixels;
+var gBuzzTrack;
 
 ACTIVE_POLL_INTERVAL = 2000;
 INACTIVE_POLL_INTERVAL = 15000;
@@ -70,6 +71,10 @@ function init() {
       startPolling();
     }
   });
+}
+
+function onBuzzClick() {
+  gBuzzTrack.play(650);
 }
 
 function startPolling() {
@@ -151,6 +156,9 @@ function initRendering() {
 
   // toggle a class on the element
   gPixelNodes[0].classList.toggle('available', appState.mySlot.status.value === '1');
+
+  // prepare the audio clip
+  gBuzzTrack = new Track(document.getElementById('buzz'));
 }
 
 function fetchAndRenderSlots() {
@@ -325,16 +333,6 @@ function sendMessage(idx) {
     // TODO: trigger some error animation?
   });
   renderApp();
-}
-
-function Buzz(m){
-  var audio = document.getElementById('buzz');
-
-  audio.load();
-  audio.play();
-  setTimeout(function() {
-    audio.pause();
-  }, m);
 }
 
 var MessageType = {
